@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.makery.address.view.AcceuilConnectedOverviewController">
+   <children>
+      <Accordion layoutX="14.0" layoutY="14.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <panes>
+          <TitledPane animated="false" text="Mon compte">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="130.0" prefWidth="200.0">
+                     <children>
+                        <Button layoutX="20.4" layoutY="20.4" mnemonicParsing="false" onAction="#handleGestionCompte" prefHeight="26.0" prefWidth="179.0" text="Gestion du compte" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Button layoutX="11.0" layoutY="49.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="179.0" text="blabla" />
+                        <Button layoutX="11.0" layoutY="90.0" mnemonicParsing="false" onAction="#handleSeDeconnecter" prefHeight="26.0" prefWidth="179.0" text="Deconnexion" />
+                     </children>
+                  </AnchorPane>
+               </content>
+          </TitledPane>
+          <TitledPane animated="false" text="Communauté">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="130.0" prefWidth="200.0">
+                     <children>
+                        <Button layoutX="20.4" layoutY="20.4" mnemonicParsing="false" prefHeight="26.0" prefWidth="179.0" text="Groupes associés" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Button layoutX="11.0" layoutY="49.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="179.0" text="Tchat" />
+                        <Button layoutX="11.0" layoutY="90.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="179.0" text="Mes groupes" />
+                     </children>
+                  </AnchorPane>
+               </content>
+          </TitledPane>
+          <TitledPane animated="false" text="Documents">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="130.0" prefWidth="200.0">
+                     <children>
+                        <Button layoutX="20.4" layoutY="20.4" mnemonicParsing="false" prefHeight="26.0" prefWidth="179.0" text="Mes documents" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Button layoutX="11.0" layoutY="49.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="179.0" text="Documents associés" />
+                        <Button layoutX="11.0" layoutY="90.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="179.0" text="Nouveau document" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+        </panes>
+      </Accordion>
+      <Label fx:id="pseudoLabel" layoutX="234.0" layoutY="24.0" text="Bienvenue ">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <TableView fx:id="documentsTable" layoutX="234.0" layoutY="76.0" prefHeight="311.0" prefWidth="451.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="75.0">
+        <columns>
+          <TableColumn fx:id="nomDocColumn" maxWidth="200.0" prefWidth="100.0" text="Document" />
+          <TableColumn fx:id="dateCreationColumn" maxWidth="200.0" prefWidth="112.0" text="Date creation" />
+            <TableColumn fx:id="nomCreateurColumn" maxWidth="150.0" prefWidth="68.0" text="Auteur" />
+            <TableColumn fx:id="descriptionColumn" maxWidth="400.0" prefWidth="150.0" text="Description" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
