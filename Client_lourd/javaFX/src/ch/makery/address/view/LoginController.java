@@ -1,6 +1,6 @@
 package ch.makery.address.view;
 
-import ch.makery.address.util.LoginManager;
+import ch.makery.address.LoginManager;
 import javafx.event.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

@@ -7,9 +7,9 @@ import javafx.scene.control.TableView;
 
 import java.time.LocalDate;
 
+import ch.makery.address.LoginManager;
 import ch.makery.address.MainApp;
 import ch.makery.address.model.Document;
-import ch.makery.address.util.LoginManager;
 
 public class AcceuilConnectedOverviewController {
 

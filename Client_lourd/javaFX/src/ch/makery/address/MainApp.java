@@ -5,7 +5,6 @@ import java.io.IOException;
 import ch.makery.address.model.Document;
 import ch.makery.address.model.Groupe;
 import ch.makery.address.model.Utilisateur;
-import ch.makery.address.util.LoginManager;
 import ch.makery.address.view.AcceuilConnectedOverviewController;
 import ch.makery.address.view.AcceuilOverviewController;
 import ch.makery.address.view.GestionCompteController;
