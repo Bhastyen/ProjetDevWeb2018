@@ -1,1 +1,3 @@
 J'envoie pseudo mdp il faut que je recupere toutes les infos de l'utilisateur+tous les documents qui lui sont rattachés (toutes les infos,chef ou membre)
+https://openclassrooms.com/forum/sujet/serialisation-et-envoie-objet-sur-socket-59911
+ca peut aider?
