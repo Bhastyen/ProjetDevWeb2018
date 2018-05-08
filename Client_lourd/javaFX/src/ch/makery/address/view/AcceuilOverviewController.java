@@ -1,11 +1,22 @@
 package ch.makery.address.view;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+import ch.makery.address.LoginManager;
 import ch.makery.address.MainApp;
 import ch.makery.address.model.Document;
+import ch.makery.address.model.Utilisateur;
 
 public class AcceuilOverviewController {
 
@@ -29,61 +40,98 @@ public class AcceuilOverviewController {
 	@FXML
 	private Label birthdayLabel;
 
-	// Reference to the main application.
+	// Recuperation des infos
 	private MainApp mainApp;
 
 	/**
-	 * The constructor. The constructor is called before the initialize() method.
+	 * Constructeur. appelé apres initialize() .
 	 */
 	public AcceuilOverviewController() {
 	}
 
 	/**
-	 * Initializes the controller class. This method is automatically called after
-	 * the fxml file has been loaded.
+	 * Fonction d'initialisation appelée à la lecture du fxml
 	 */
 	@FXML
 	private void initialize() {
-		// Initialize the person table with the two columns.
+		//Initialise le tableau
 		nomDocColumn.setCellValueFactory(cellData -> cellData.getValue().nomDocProperty());
 		nomCreateurColumn.setCellValueFactory(cellData -> cellData.getValue().nomCreateurProperty());
 
-		// Clear person details.
+		
 		showDocDetails(null);
 
-		// Listen for selection changes and show the person details when changed.
+		
 		personTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showDocDetails(newValue));
 	}
 
 	/**
-	 * Is called by the main application to give a reference back to itself.
+	 * Appelée par le main afin de transferer ses infos
 	 * 
 	 * @param mainApp
 	 */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 
-		// Add observable list data to the table
 		personTable.setItems(mainApp.getDocData());
 	}
 
 	public void handleSeConnecter() {
-		mainApp.seConnecter();
+		Stage stage = new Stage();
+		stage.setTitle("Se connecter");
+		stage.initModality(Modality.WINDOW_MODAL);
+		stage.initOwner(mainApp.getPrimaryStage());
+		Scene scene = new Scene(new StackPane());
 
-	}
+		mainApp.setLoginManager(new LoginManager(scene, stage, mainApp));
+		mainApp.getLoginManager().showLoginScreen();
+
+		stage.setScene(scene);
+		stage.showAndWait();
+
+	}		
+	/**
+	 * Cette fonction ouvre la page d'inscription
+	 *
+	 * @return true si l'utilisateur confirme.
+	 */
+	public boolean handleSinscrire() {
+
+	
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(MainApp.class.getResource("view/Inscription.fxml"));
+				AnchorPane page = (AnchorPane) loader.load();
+
+				Stage dialogStage = new Stage();
+				dialogStage.setTitle("Inscription");
+				dialogStage.initModality(Modality.WINDOW_MODAL);
+				dialogStage.initOwner(mainApp.getPrimaryStage());
+				Scene scene = new Scene(page);
+				dialogStage.setScene(scene);
+
+				InscriptionController controller = loader.getController();
+				controller.setDialogStage(dialogStage);
+				controller.setMainApp(mainApp);
+				controller.setPerson(mainApp.getUser());
+
+				dialogStage.showAndWait();
+
+				return controller.isOkClicked();
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
 
 	private void showDocDetails(Document doc) {
 		if (doc != null) {
-			// Fill the labels with info from the person object.
 			nomDocLabel.setText(doc.getNomDoc());
 			nomCreateurLabel.setText(doc.getNomCreateur());
 			descriptionLabel.setText(doc.getDescription());
 
-			// TODO: We need a way to convert the birthday into a String!
-			// birthdayLabel.setText(...);
 		} else {
-			// Person is null, remove all the text.
 			nomDocLabel.setText("");
 			nomCreateurLabel.setText("");
 			descriptionLabel.setText("");

@@ -7,7 +7,6 @@ import ch.makery.address.model.Groupe;
 import ch.makery.address.model.Utilisateur;
 import ch.makery.address.view.AcceuilConnectedOverviewController;
 import ch.makery.address.view.AcceuilOverviewController;
-import ch.makery.address.view.GestionCompteController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,8 +14,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
@@ -34,35 +31,9 @@ public class MainApp extends Application {
 		groupe1.ajoutMembre(new Utilisateur("Utilisateur", "numero3"));
 		monDoc = new Document(groupe1, "MonDoc!");
 		docData.add(monDoc);
-
+System.out.println(user.getPseudo());
 	}
 
-	/**
-	 * Action effectuée lors d'un clique sur le bouton se connecter
-	 */
-
-	public void seConnecter() {
-
-		Stage stage = new Stage();
-		stage.setTitle("Se connecter");
-		stage.initModality(Modality.WINDOW_MODAL);
-		stage.initOwner(primaryStage);
-		Scene scene = new Scene(new StackPane());
-
-		loginManager = new LoginManager(scene, stage, this);
-		loginManager.showLoginScreen();
-
-		stage.setScene(scene);
-		stage.showAndWait();
-	}
-
-	/**
-	 * Action effectuée lors d'un clique sur le bouton se deconnecter
-	 */
-	public void seDeconnecter() {
-		loginManager.logout();
-		connected(false);
-	}
 
 	public ObservableList<Document> getDocData() {
 		return docData;
@@ -166,41 +137,25 @@ public class MainApp extends Application {
 
 	}
 
-	/**
-	 * Cette fonction ouvre la page de gestion de compte
-	 *
-	 * @param user
-	 *            L'utilisateur à editer
-	 * @return true si l'utilisateur confirme.
-	 */
-	public boolean gestionCompte() {
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/GestionCompte.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
 
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Gestion de compte");
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.initOwner(primaryStage);
-			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
-
-			GestionCompteController controller = loader.getController();
-			controller.setDialogStage(dialogStage);
-			controller.setPerson(this.getUser());
-
-			dialogStage.showAndWait();
-
-			return controller.isOkClicked();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	private Utilisateur getUser() {
+	public Utilisateur getUser() {
 
 		return this.user;
+	}	
+	public void setUser(Utilisateur user) {
+
+		this.user=user;
+	}
+
+
+
+	public LoginManager getLoginManager() {
+		// TODO Auto-generated method stub
+		return this.loginManager;
+	}
+
+	public void setLoginManager(LoginManager loginManager) {
+		// TODO Auto-generated method stub
+		this.loginManager=loginManager;
 	}
 }

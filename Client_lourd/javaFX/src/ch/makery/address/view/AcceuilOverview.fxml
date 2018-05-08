@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.makery.address.view.AcceuilOverviewController">
+<AnchorPane prefHeight="400.0" prefWidth="700.0" styleClass="background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.makery.address.view.AcceuilOverviewController">
    <children>
       <SplitPane dividerPositions="0.29797979797979796" layoutY="14.0" prefHeight="400.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -31,7 +31,7 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
                   <Label layoutX="29.0" layoutY="32.0" text="Details du document" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0" />
-                  <GridPane layoutX="43.0" layoutY="61.0" prefHeight="212.0" prefWidth="379.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="60.0">
+                  <GridPane layoutX="43.0" layoutY="61.0" prefHeight="212.0" prefWidth="379.0" stylesheets="@style.css" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="60.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -42,12 +42,12 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Nom du doc:" />
-                        <Label text="Nombre de membres:" GridPane.rowIndex="1" />
-                        <Label fx:id="nomDocLabel" text="Label" GridPane.columnIndex="1" />
-                        <Label fx:id="nomCreateurLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="Description" GridPane.rowIndex="2" />
-                        <Label fx:id="descriptionLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label styleClass="labelgr" text="Nom du doc:" />
+                        <Label styleClass="labelgr" text="Nombre de membres:" GridPane.rowIndex="1" />
+                        <Label fx:id="nomDocLabel" styleClass="labelgr" text="Label" GridPane.columnIndex="1" />
+                        <Label fx:id="nomCreateurLabel" styleClass="labelgr" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label styleClass="labelgr" text="Description" GridPane.rowIndex="2" />
+                        <Label fx:id="descriptionLabel" styleClass="labelgr" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                   <ButtonBar layoutX="210.0" layoutY="315.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="50.0">
@@ -55,7 +55,12 @@
                         <Button mnemonicParsing="false" text="Afficher" />
                     </buttons>
                   </ButtonBar>
-                <Button layoutX="233.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleSeConnecter" text="Se connecter" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="20.0" />
+                  <ButtonBar layoutX="133.0" layoutY="23.0" prefHeight="40.0" prefWidth="339.0">
+                    <buttons>
+                      <Button mnemonicParsing="false" onAction="#handleSeConnecter" prefHeight="33.0" text="Se connecter" />
+                      <Button mnemonicParsing="false" onAction="#handleSinscrire" text="S'inscrire" />
+                    </buttons>
+                  </ButtonBar>
                </children>
             </AnchorPane>
         </items>
