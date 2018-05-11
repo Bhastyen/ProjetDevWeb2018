@@ -1,12 +1,18 @@
 package ch.makery.address;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import ch.makery.address.model.Document;
 import ch.makery.address.model.Groupe;
+import ch.makery.address.model.Noeud;
 import ch.makery.address.model.Utilisateur;
 import ch.makery.address.view.AcceuilConnectedOverviewController;
 import ch.makery.address.view.AcceuilOverviewController;
+import ch.makery.address.view.EditDocument;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,16 +30,25 @@ public class MainApp extends Application {
 	LoginManager loginManager;
 	private Utilisateur user = new Utilisateur("jean-claude", "abribuss");
 	private Groupe groupe1 = new Groupe(user);
-
+	 private Desktop desktop = Desktop.getDesktop();
+	public	Document doc=new Document(new Groupe(new Utilisateur("jean","herve")),"testdoc");
+    	
 	public MainApp() {
 		// Add some sample data
 		groupe1.ajoutMembre(new Utilisateur("Utilisateur", "numero2"));
 		groupe1.ajoutMembre(new Utilisateur("Utilisateur", "numero3"));
 		monDoc = new Document(groupe1, "MonDoc!");
 		docData.add(monDoc);
-System.out.println(user.getPseudo());
+		Noeud noeud=new Noeud(200,80,doc.getNomDoc(),50);
+    	doc.addNoeud(noeud);
+    	Noeud noeud2=new Noeud(400,400,"fils1",25);
+    	noeud2.setPere(noeud);
+    	doc.addNoeud(noeud2);
+    	Noeud noeud3=new Noeud(400,400,"fils2",25);
+    	noeud3.setPere(noeud2);
+    	doc.addNoeud(noeud3);
+		System.out.println(user.getPseudo());
 	}
-
 
 	public ObservableList<Document> getDocData() {
 		return docData;
@@ -136,18 +151,27 @@ System.out.println(user.getPseudo());
 		}
 
 	}
-
+	
+	 private void openFile(File file) {
+	        try {
+	            desktop.open(file);
+	        } catch (IOException ex) {
+	            Logger.getLogger(
+	                MainApp.class.getName()).log(
+	                    Level.SEVERE, null, ex
+	                );
+	        }
+	    }
 
 	public Utilisateur getUser() {
 
 		return this.user;
-	}	
-	public void setUser(Utilisateur user) {
-
-		this.user=user;
 	}
 
+	public void setUser(Utilisateur user) {
 
+		this.user = user;
+	}
 
 	public LoginManager getLoginManager() {
 		// TODO Auto-generated method stub
@@ -156,6 +180,6 @@ System.out.println(user.getPseudo());
 
 	public void setLoginManager(LoginManager loginManager) {
 		// TODO Auto-generated method stub
-		this.loginManager=loginManager;
+		this.loginManager = loginManager;
 	}
 }

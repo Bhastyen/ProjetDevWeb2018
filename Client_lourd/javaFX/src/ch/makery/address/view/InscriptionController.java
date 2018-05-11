@@ -1,21 +1,29 @@
 package ch.makery.address.view;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import ch.makery.address.MainApp;
 import ch.makery.address.model.Utilisateur;
 
 public class InscriptionController {
-
+	 private Desktop desktop = Desktop.getDesktop();
+	 final FileChooser fileChooser = new FileChooser();
 	@FXML
 	private TextField pseudoField;
 	@FXML
 	private TextField emailField;
-	@FXML
-	private TextField avatarField;
 	@FXML
 	private TextField MdpField;
 	@FXML
@@ -25,7 +33,8 @@ public class InscriptionController {
 	private Utilisateur user;
 	private boolean okClicked = false;
 	// Reference to the main application.
-		private MainApp mainApp;
+	private MainApp mainApp;
+
 	/**
 	 * Fonction d'initialisation appelée à la lecture du fxml
 	 */
@@ -41,10 +50,12 @@ public class InscriptionController {
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
+
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 
 	}
+
 	/**
 	 * Récupération de l'utilisateur à éditer
 	 *
@@ -55,9 +66,8 @@ public class InscriptionController {
 
 		pseudoField.setText(user.getPseudo());
 		emailField.setText(user.getEmail());
-		avatarField.setText(user.getAvatar());
 		MdpField.setText("*********");
-		
+
 		confirmMdpField.setPromptText("Confirmez");
 	}
 
@@ -79,7 +89,6 @@ public class InscriptionController {
 			mainApp.setUser(new Utilisateur());
 			user.setPseudo(pseudoField.getText());
 			user.setEmail(emailField.getText());
-			user.setAvatar(avatarField.getText());
 			user.setMotPasse(MdpField.getText());
 
 			okClicked = true;
@@ -110,17 +119,12 @@ public class InscriptionController {
 		if (emailField.getText() == null || emailField.getText().length() == 0) {
 			errorMessage += "mail non valide\n";
 		}
-		if (avatarField.getText() == null || avatarField.getText().length() == 0) {
-			errorMessage += "Avatar non valide\n";
-		}
-
-		
+	
 
 		if (MdpField.getText() == null || MdpField.getText().length() == 0) {
 			errorMessage += "Mot de passe non valide!\n";
 		}
 
-		
 		if (errorMessage.length() == 0) {
 			return true;
 		} else {
@@ -136,4 +140,27 @@ public class InscriptionController {
 			return false;
 		}
 	}
+	 private void openFile(File file) {
+	        try {
+	            desktop.open(file);
+	        } catch (IOException ex) {
+	            Logger.getLogger(
+	                GestionCompteController.class.getName()).log(
+	                    Level.SEVERE, null, ex
+	                );
+	        }
+	    }
+	public void handleAvatar(final ActionEvent e) {
+     configureFileChooser(fileChooser);
+     File file = fileChooser.showOpenDialog(dialogStage);
+     if (file != null) {
+         openFile(file);
+     }
+ }
+	  private static void configureFileChooser(final FileChooser fileChooser){                           
+	        fileChooser.setTitle("View Pictures");
+	        fileChooser.setInitialDirectory(
+	            new File(System.getProperty("user.home"))
+	        ); 
+	    }
 }

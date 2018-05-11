@@ -52,7 +52,7 @@
                   </GridPane>
                   <ButtonBar layoutX="210.0" layoutY="315.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="50.0">
                     <buttons>
-                        <Button mnemonicParsing="false" text="Afficher" />
+                        <Button mnemonicParsing="false" onAction="#editDoc" text="Afficher" />
                     </buttons>
                   </ButtonBar>
                   <ButtonBar layoutX="133.0" layoutY="23.0" prefHeight="40.0" prefWidth="339.0">

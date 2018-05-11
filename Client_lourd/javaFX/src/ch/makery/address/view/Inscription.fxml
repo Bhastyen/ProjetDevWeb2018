@@ -43,7 +43,6 @@
             </Label>
             <TextField fx:id="pseudoField" GridPane.columnIndex="1" />
             <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="avatarField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Mon mot de passe:" wrapText="true" GridPane.rowIndex="3">
                <font>
                   <Font name="DejaVu Serif Bold" size="13.0" />
@@ -56,6 +55,7 @@
             </Label>
             <TextField fx:id="MdpField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="confirmMdpField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Button mnemonicParsing="false" onAction="#handleAvatar" prefHeight="26.0" prefWidth="216.0" text="Choisir un avatar" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <Label layoutX="75.0" layoutY="69.0" text="Mes infos:" AnchorPane.leftAnchor="75.0" AnchorPane.topAnchor="69.0">

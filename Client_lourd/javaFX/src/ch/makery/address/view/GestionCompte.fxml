@@ -42,7 +42,7 @@
             </Label>
             <TextField fx:id="pseudoField" GridPane.columnIndex="1" />
             <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="avatarField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button mnemonicParsing="false" onAction="#handleAvatar" text="Choisir un fichier" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <Label layoutX="75.0" layoutY="69.0" text="Mes infos:" AnchorPane.leftAnchor="75.0" AnchorPane.topAnchor="69.0">

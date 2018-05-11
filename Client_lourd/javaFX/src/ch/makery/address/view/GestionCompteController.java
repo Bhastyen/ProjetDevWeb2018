@@ -1,20 +1,28 @@
 package ch.makery.address.view;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import ch.makery.address.model.Utilisateur;
 
 public class GestionCompteController {
-
+	 private Desktop desktop = Desktop.getDesktop();
+	 final FileChooser fileChooser = new FileChooser();
 	@FXML
 	private TextField pseudoField;
 	@FXML
 	private TextField emailField;
-	@FXML
-	private TextField avatarField;
 	@FXML
 	private TextField ancienMdpField;
 	@FXML
@@ -52,7 +60,7 @@ public class GestionCompteController {
 
 		pseudoField.setText(user.getPseudo());
 		emailField.setText(user.getEmail());
-		avatarField.setText(user.getAvatar());
+		
 		ancienMdpField.setText("*********");
 		nouveauMdpField.setPromptText("Nouveau mdp");
 		confirmMdpField.setPromptText("Confirmez");
@@ -75,7 +83,6 @@ public class GestionCompteController {
 		if (isInputValid()) {
 			user.setPseudo(pseudoField.getText());
 			user.setEmail(emailField.getText());
-			user.setAvatar(avatarField.getText());
 			user.setMotPasse(nouveauMdpField.getText());
 
 			okClicked = true;
@@ -105,9 +112,7 @@ public class GestionCompteController {
 		if (emailField.getText() == null || emailField.getText().length() == 0) {
 			errorMessage += "mail non valide\n";
 		}
-		if (avatarField.getText() == null || avatarField.getText().length() == 0) {
-			errorMessage += "Avatar non valide\n";
-		}
+	
 
 		if (!ancienMdpField.getText().equals(user.getMotPasse())) {
 			errorMessage += "Vous vous etes trompé de mot de passe!\n";
@@ -137,4 +142,27 @@ public class GestionCompteController {
 			return false;
 		}
 	}
+	 private void openFile(File file) {
+	        try {
+	            desktop.open(file);
+	        } catch (IOException ex) {
+	            Logger.getLogger(
+	                GestionCompteController.class.getName()).log(
+	                    Level.SEVERE, null, ex
+	                );
+	        }
+	    }
+	public void handleAvatar(final ActionEvent e) {
+        configureFileChooser(fileChooser);
+        File file = fileChooser.showOpenDialog(dialogStage);
+        if (file != null) {
+            openFile(file);
+        }
+    }
+	  private static void configureFileChooser(final FileChooser fileChooser){                           
+	        fileChooser.setTitle("View Pictures");
+	        fileChooser.setInitialDirectory(
+	            new File(System.getProperty("user.home"))
+	        ); 
+	    }
 }
