@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT document (noeud*)>
+<!ATTLIST document nom CDATA #REQUIRED id_max CDATA #REQUIRED>
+<!ELEMENT noeud (idee,noeud*)>
+<!ATTLIST noeud id ID #REQUIRED parent IDREF #REQUIRED x CDATA #REQUIRED y CDATA #REQUIRED taille CDATA #REQUIRED couleur1 CDATA #REQUIRED couleur2 CDATA #REQUIRED couleur3 CDATA #REQUIRED>
+<!ELEMENT idee (#PCDATA)>
+<!ATTLIST idee taille CDATA #REQUIRED couleur1 CDATA #REQUIRED couleur2 CDATA #REQUIRED couleur3 CDATA #REQUIRED>

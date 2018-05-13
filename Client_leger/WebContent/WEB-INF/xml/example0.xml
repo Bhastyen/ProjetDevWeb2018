@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE MindMap SYSTEM "/WEB-INF/DTD/MindMap.dtd">
+
+<document nom="Example" id_max="3">
+	<noeud id="n1" parent="n1" x="12" y="30" taille="50" couleur1="255" couleur2="0" couleur3="0">
+    	<idee taille="15" couleur1="255" couleur2="100" couleur3="0">Idée Principale1</idee>
+    	<noeud id="n2" parent="n1" x="30" y="12" taille="50" couleur1="255" couleur2="100" couleur3="0">
+        	<idee taille="10" couleur1="255" couleur2="100" couleur3="0">Idée secondaire</idee>
+    	</noeud>
+	</noeud>
+
+	<noeud id="n3" parent="n3" x="50" y="10" taille="50" couleur1="0" couleur2="0" couleur3="0">
+    	<idee taille="15" couleur1="255" couleur2="100" couleur3="0">Idée Principale2</idee>
+	</noeud>
+</document>
