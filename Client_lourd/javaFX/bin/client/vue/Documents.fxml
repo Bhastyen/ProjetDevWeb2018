@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import client.vue.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="450" prefWidth="600.0" style="-fx-background-color: #FAEBD7;" 
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.vue.DocumentController">
+   
+   <bottom>
+      <FlowPane alignment="CENTER" hgap="10.0" style="-fx-background-color: #F0F8FF;" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="10.0" top="10.0" />
+         </padding>
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <RadioButton mnemonicParsing="false" onAction="#formeCirculaire" selected="true" text="Cercle">
+               <toggleGroup>
+                  <ToggleGroup fx:id="formes" />
+               </toggleGroup></RadioButton>
+            <RadioButton mnemonicParsing="false" onAction="#formeCarrée" text="Carré" toggleGroup="$formes" />
+            <RadioButton mnemonicParsing="false" onAction="#formeCarréeArrondi" text="Carré arrondi" toggleGroup="$formes" />
+            <TextField fx:id="largeur" onAction="#changerLargeur" prefHeight="25.0" prefWidth="100.0" promptText="Largeur" text="100">
+               <FlowPane.margin>
+                  <Insets left="30.0" />
+               </FlowPane.margin>
+            </TextField>
+            <Button mnemonicParsing="false" onAction="#toutEffacer" text="Tout effacer">
+               <FlowPane.margin>
+                  <Insets left="30.0" />
+               </FlowPane.margin>
+            </Button>
+         </children>
+      </FlowPane>
+   </bottom>
+</BorderPane>
