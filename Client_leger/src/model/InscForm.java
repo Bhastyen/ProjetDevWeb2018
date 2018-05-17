@@ -1,5 +1,8 @@
 package model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +23,7 @@ public class InscForm {
     
    public Utilisateur inscUtilisateur(HttpServletRequest request) {
     	
-    		String email = request.getParameter("email");
+    	String email = request.getParameter("email");
         String pass = request.getParameter("pass");
         String confirmPass = request.getParameter("confPass");
         String UserName = request.getParameter("userName"); 
@@ -48,11 +51,29 @@ public class InscForm {
         }   
         user.setUserName(UserName);
         
+        // connection a la bdd pour voir s'il n'existe pas deja une adresse email semblable
+        if (email != null && pass != null && UserName != null){
+        	if (!bdd.Connect.valideEmail(email)){
+				erreurs.put("bdd", "Adresse déjà utilisé");
+			}
+        }
+        
         if(erreurs.isEmpty()) {
-        		result = "Inscription rÃ©ussie !";
+        	int n = 0;
+            // connection a la bdd pour inserer le nouveau utilisateur
+            if (email != null && pass != null && UserName != null){
+            	n = bdd.Connect.insertUtilisateur(UserName, email, new Date(), pass);
+            }
+            
+            // verifie que l'insertion est bien fonctionnée
+            if (n == 0){
+            	result = "Inscription echouee!";
+            }else{
+            	result = null;
+            }
         }
         else {
-        		result = "Inscription Ã©chouÃ©e !";
+        	    result = "Inscription echouee !";
         }
         
         return user;

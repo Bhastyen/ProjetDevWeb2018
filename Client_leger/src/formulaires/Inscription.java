@@ -17,8 +17,9 @@ import model.Utilisateur;
 @WebServlet("/Inscription")
 public class Inscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static final String INSC = "/WEB-INF/inscription.jsp";
-     
+	public static final String INSC = "/WEB-INF/jsp/inscription.jsp";
+	public static final String CONNECT = "/WEB-INF/jsp/connexion.jsp";
+    
     public Inscription() {
         super();
     }
@@ -34,7 +35,11 @@ public class Inscription extends HttpServlet {
 		request.setAttribute("inscForm", inscForm);
 		request.setAttribute("user", user);
 		
-		this.getServletContext().getRequestDispatcher(INSC).forward( request, response );
+		if (inscForm.getResult() != null){
+			this.getServletContext().getRequestDispatcher(INSC).forward( request, response );
+		}else{
+			this.getServletContext().getRequestDispatcher(CONNECT).forward(request, response);
+		}
 	}
 	
 }

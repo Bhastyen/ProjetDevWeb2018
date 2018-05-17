@@ -3,6 +3,8 @@ package controller;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.DocumentPerso;
 import model.Documents;
 
 import org.w3c.dom.Document;
@@ -35,11 +38,45 @@ public class DocumentController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<String[]> docs = new ArrayList<>(); 
+		String[] tab;
+		int vis;
+		String nom; String lien; String createur; String visibilite = ""; String description;
+		java.sql.Date date;
+		
+		System.out.println("Probleme 10");
 		// verifie s'il existe un pseudo ou non
-		if (request.getSession().getAttribute("pseudo") == null || ((String) request.getSession().getAttribute("pseudo")).isEmpty()){
-			//getServletContext().getRequestDispatcher("/WEF-INF/jsp/connexion.jsp").forward(request, response);  //pas de pseudo = connexion
+		if (request.getSession().getAttribute("user") == null || ((String) request.getSession().getAttribute("user")).isEmpty()){
+			this.getServletContext().getRequestDispatcher("/WEF-INF/jsp/connexion.jsp").forward(request, response);  //pas de pseudo = connexion
 		}else{
-			getServletContext().getRequestDispatcher("/WEF-INF/jsp/choixDocument.jsp").forward(request, response);  // pseudo = choix du document a ouvrir
+		    // recupere les donnees de la bdd
+			java.sql.ResultSet result = bdd.Connect.getDonneeDocument(((model.Utilisateur) request.getSession().getAttribute("user")).getEmail());
+			
+		    if (result != null){
+			 try {
+				while (result.next()){
+					   // on stocke ses donnees		   
+				       nom = result.getString("Nom");
+				       lien = result.getString("Lien_document");
+				       createur = result.getString("Nom_groupe");
+				       date = result.getDate("DateCreation");
+				       description = result.getString("Description");
+				       vis = result.getInt("Visibilite");
+				       if (vis == 1) visibilite = "Public";
+				       else visibilite = "Prive";
+				       
+				       tab = new String[7];
+				       tab[0] = nom; tab[1] = lien; tab[2] = createur; tab[3] = date.toString(); tab[4] = description; tab[5] = visibilite; //tab[6] = nom; 
+				       docs.add(tab);
+				   }
+			 } catch (SQLException e) {
+				e.printStackTrace();
+		   	 }
+		    }
+		    
+		    // on definit la liste a afficher dans la jsp
+		    request.setAttribute("docs", docs);
+			this.getServletContext().getRequestDispatcher("/WEF-INF/jsp/choixDocument.jsp").forward(request, response);  // pseudo = choix du document a ouvrir
 		}
 	}
 	
@@ -134,7 +171,7 @@ public class DocumentController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getParameter("nouveau").isEmpty())
+        if (request.getParameter("nouveau") == null || request.getParameter("nouveau").isEmpty())
         	ouverture_fichier(request, response);
         else creation_document(request, response);
 	}

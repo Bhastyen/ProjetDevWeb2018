@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.util.Date;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -45,10 +46,122 @@ public class Connect {
 		
 		try {
 			st = (Statement) c.createStatement();
-			//pst = (PreparedStatement) c.prepareStatement("SELECT age FROM personne WHERE id_personne = ?");
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
+	}
+	
+	public static boolean valideEmail(String email){
+		Connect c = new Connect("root", "", "mind_map");
+		ResultSet r = null;
+	    PreparedStatement pst;
+	    boolean valide = false;
+	    
+		try {
+			pst = (PreparedStatement) c.getConnexion().prepareStatement("SELECT * FROM utilisateurs WHERE email = ?");
+			pst.setString(1, email);
+			
+			r = pst.executeQuery();
+			valide = r.next();
+			
+			pst.close();
+			c.getConnexion().close();
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+		
+		return valide;
+	}
+	
+	public static boolean valideUtilisateur(String email, String mdp){
+		Connect c = new Connect("root", "", "mind_map");
+		ResultSet r = null;
+	    PreparedStatement pst;
+	    boolean valide = false;
+	    
+		try {
+			pst = (PreparedStatement) c.getConnexion().prepareStatement("SELECT * FROM utilisateurs WHERE email = ? AND Mdp = ?");
+			pst.setString(1, email);
+			pst.setString(2, mdp);
+			
+			r = pst.executeQuery();
+			valide = r.next();
+			
+			pst.close();
+			c.getConnexion().close();
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+		
+		return valide;
+	}
+	
+	public static ResultSet getDonneeUtilisateur(String email, String mdp){
+		Connect c = new Connect("root", "", "mind_map");
+		ResultSet r = null;
+	    PreparedStatement pst;
+	    
+		try {
+			pst = (PreparedStatement) c.getConnexion().prepareStatement("SELECT * FROM utilisateurs WHERE email = ? AND Mdp = ?");
+			pst.setString(1, email);
+			pst.setString(2, mdp);
+			r = pst.executeQuery();
+			
+			pst.close();
+			c.getConnexion().close();
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+		
+		return r;
+	}
+	
+	public static ResultSet getDonneeDocument(String email){
+		Connect c = new Connect("root", "", "mind_map");
+		ResultSet r = null;
+	    PreparedStatement pst;
+	    
+		try {
+			pst = (PreparedStatement) c.getConnexion().prepareStatement("SELECT documents.Nom,groupe.Nom_groupe,documents.Visibilite,documents.Description"+
+													                    " FROM utilisateurs,membres,groupes,documents"+
+													                    " WHERE utilisateurs.Numero = membres.Num_utilisateur"+
+													                    " AND membres.Num_groupe = groupe.Numero_groupe"+
+													                    " AND groupe.Numero_doc = documents.Numero_doc"+
+													                    " AND utilisateurs.email = ?");
+			pst.setString(1, email);
+			r = pst.executeQuery();
+			
+			pst.close();
+			c.getConnexion().close();
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+		
+		return r;
+	}
+	
+	public static int insertUtilisateur(String pseudo, String email, Date d, String mdp){
+		Connect c = new Connect("root", "", "mind_map");
+		int r = 0;
+		java.sql.Date d1 = new java.sql.Date(d.getTime());
+	    PreparedStatement pst;
+	    
+		try {
+			pst = (PreparedStatement) c.getConnexion().prepareStatement("INSERT INTO utilisateurs (Pseudo,Mdp,Date_inscription,email) VALUES (?, ?, ?, ?)");
+			pst.setString(1, pseudo);
+			pst.setString(2, mdp);
+			pst.setDate(3, d1);
+			pst.setString(4, email);
+			
+			r = pst.executeUpdate();
+			
+			pst.close();
+			c.getConnexion().close();
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+		
+		return r;
 	}
 	
 	public static ResultSet processSelect(String query){
@@ -58,9 +171,8 @@ public class Connect {
 		r = c.reqSQL(query, 's');
 
 		try {
-			c.getConnection().close();
+			c.getConnexion().close();
 			c.getStatement().close();
-			c.getPreparedStatement().close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -75,9 +187,8 @@ public class Connect {
 		n = c.reqUpdate(query);
 
 		try {
-			c.getConnection().close();
+			c.getConnexion().close();
 			c.getStatement().close();
-			c.getPreparedStatement().close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -246,7 +357,7 @@ public class Connect {
 		this.db = db;
 	}
 
-	public Connection getConnection() {
+	public Connection getConnexion() {
 		return c;
 	}
 

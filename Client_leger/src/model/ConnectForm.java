@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +38,14 @@ public class ConnectForm {
     			erreurs.put("pass", e.getMessage());
         } 		   
         user.setPass(pass);
+        
+        // connection a la base de données
+        if (email != null && pass != null){
+        	System.out.println("Probleme "+bdd.Connect.valideUtilisateur(email, pass));
+		    if (!bdd.Connect.valideUtilisateur(email, pass)){
+				erreurs.put("bdd", "Identifiant inconnu");
+		    }
+        }
        
         return user;
         

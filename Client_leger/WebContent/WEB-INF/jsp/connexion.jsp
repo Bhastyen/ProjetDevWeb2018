@@ -23,7 +23,7 @@
 			<br/>
 			
 			<input type="submit" value="Connexion" class="boutonSubmit" />
-			<a href="/FormProjet/Inscription" >Créer un compte</a>
+			<a href="/ProjetWeb2018/Inscription" >Créer un compte</a>
         		<br/>
         		
         	</fieldset>

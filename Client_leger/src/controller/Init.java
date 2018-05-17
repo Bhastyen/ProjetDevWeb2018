@@ -28,7 +28,7 @@ public class Init extends HttpServlet {
 	 * @see Servlet#init(ServletConfig)
 	 */
     public void init(ServletConfig config) throws ServletException {
-    	try {
+    	/*try {
     		// creation de nouveaux thread permettant de gerer le client lourd
 			envoie = new Thread(new SocketEnvoieDonnee());
 			execute = new Thread(new SocketExecuteCommande());
@@ -38,23 +38,23 @@ public class Init extends HttpServlet {
 			execute.start();
 		} catch (IOException e) {
 			System.out.println(e);
-		}
+		}*/
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 response.sendRedirect("/WEF-INF/jsp/connexion.jsp");
+		 response.sendRedirect("/ProjetWeb2018/Connexion");
 	}
 	
 	public void destroy(){
-		try {
+		/*try {
 			envoie.join();
 			execute.join();
 		} catch (InterruptedException e) {
 			System.out.println(e);
-		}
+		}*/
 	}
 
 }

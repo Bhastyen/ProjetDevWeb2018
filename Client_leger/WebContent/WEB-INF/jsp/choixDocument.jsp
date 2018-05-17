@@ -10,50 +10,19 @@
 </head>
 
 <body>
-	<% 
-	    int vis;
-	    String nom;
-	    String lien;
-	    String date;
-	    String createur;
-	    String visibilite;
-	    String description;
-	    
-		java.sql.ResultSet result = bdd.Connect.processSelect("SELECT documents.Nom,groupe.Nom_groupe,documents.Visibilite,documents.Description"+
-				                                               " FROM utilisateurs,membres,groupes,documents"+
-		                                                       " WHERE utilisateurs.Numero = membres.Num_utilisateur"+
-				                                               " AND membres.Num_groupe = groupe.Numero_groupe"+
-		                                                       " AND groupe.Numero_doc = documents.Numero_doc"+
-				                                               " AND utilisateurs.Pseudo = ${session.utilisateur.pseudo}");
-	                                                                                                                                                                              
-	   if (result != null){
-		   while (result.next()){
-		       nom = result.getString("Nom");
-		       lien = result.getString("Lien_document");
-		       createur = result.getString("Nom_groupe");
-		       //date = result.getString("DateCreation");
-		       description = result.getString("Description");
-               vis = result.getInt("Visibilite");
-		       if (vis == 1) 
-		    	   visibilite = "Public";
-		       else if (vis == 2) 
-		           visibilite = "Prive";
-		   %>
-			   <form action="/DocumentController" method="post">
-			       <fieldset> 
-			           <legend>${nom}</legend>
-				   	   <input type="hidden" value="${nom}" name="nom"/>
-				   	   <input type="hidden" value="${lien}" name="lien"/>
-				   	   <label for="createur">Créateur: ${createur}</label><input type="hidden" value="${createur}" id="createur" name="createur"/>
-				   	   <label for="visibilite">Visibilité: ${visibilite}</label><input type="hidden" value="${visibilite}" id="visibilite" name="visibilite"/>
-				   	   <label for="description">Description: ${description}</label><input type="hidden" value="${description}" id="description" name="description"/>
-				       <input type="submit" value="Valider" id="choixDoc"/>
-			       </fieldset>
-			   </form><br/>
-	<% 	   }
-	   }
-	%>
-	
+    <c:forEach items="${request.docs}" var="doc"> 
+		<form action="/DocumentController" method="post">
+			 <fieldset> 
+		  	      <legend>${doc[0]}</legend>
+		 		  <input type="hidden" value="${doc[0]}" name="nom"/>
+				  <input type="hidden" value="${doc[1]}" name="lien"/>
+				  <label for="createur">Créateur: ${doc[2]}</label><input type="hidden" value="${doc[2]}" id="createur" name="createur"/>
+				  <label for="visibilite">Visibilité: ${doc[3]}</label><input type="hidden" value="${doc[3]}" id="visibilite" name="visibilite"/>
+				  <label for="description">Description: ${doc[4]}</label><input type="hidden" value="${doc[4]}" id="description" name="description"/>
+				  <input type="submit" value="Valider" id="choixDoc"/>
+			 </fieldset>
+		</form><br/>
+    </c:forEach>
 	
 	<form action="/WEB-INF/jsp/creationDocument.jsp" method="get">
 		<fieldset> 

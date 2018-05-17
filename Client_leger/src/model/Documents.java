@@ -1,7 +1,7 @@
 package model;
 
 import java.util.ArrayList;
-import controller.DocumentPerso;
+import model.DocumentPerso;
 
 
 

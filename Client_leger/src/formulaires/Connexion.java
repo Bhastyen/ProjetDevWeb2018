@@ -17,8 +17,8 @@ import model.Utilisateur;
 @WebServlet("/Connexion")
 public class Connexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static final String CONNECT = "/WEB-INF/connexion.jsp";
-	public static final String CONNECTED = "/WEB-INF/connexion.jsp";
+	public static final String CONNECT = "/WEB-INF/jsp/connexion.jsp";
+	public static final String CONNECTED = "/WEB-INF/jsp/connexion.jsp";
 	
 	
     
@@ -37,16 +37,17 @@ public class Connexion extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        if (form.getErreurs().isEmpty() ) {
-            session.setAttribute("sessionUser", utilisateur );
-        } else {
-            session.setAttribute("sessionUser", null );
-        }
-
         request.setAttribute( "form", form );
         request.setAttribute( "utilisateur", utilisateur );
-
-        this.getServletContext().getRequestDispatcher(CONNECT).forward( request, response );
+        
+        if (form.getErreurs().isEmpty()){
+        	System.out.println("Probleme1 "+form.getErreurs().isEmpty());
+            session.setAttribute("sessionUser", utilisateur);
+            this.getServletContext().getRequestDispatcher("/DocumentController").forward( request, response );
+        } else {        	
+        	session.setAttribute("sessionUser", null);
+        	this.getServletContext().getRequestDispatcher(CONNECT).forward( request, response );
+        }
     }
 	
 }
