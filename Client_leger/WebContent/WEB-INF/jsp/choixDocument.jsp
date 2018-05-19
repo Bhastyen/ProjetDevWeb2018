@@ -5,13 +5,13 @@
 <html>
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Choix du document</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>Choix du document</title>
 </head>
 
 <body>
-    <c:forEach items="${request.docs}" var="doc"> 
-		<form action="/DocumentController" method="post">
+    <c:forEach items="${request.docs}" var="doc">
+		<form action="DocumentController" method="post">
 			 <fieldset> 
 		  	      <legend>${doc[0]}</legend>
 		 		  <input type="hidden" value="${doc[0]}" name="nom"/>
@@ -19,16 +19,16 @@
 				  <label for="createur">Créateur: ${doc[2]}</label><input type="hidden" value="${doc[2]}" id="createur" name="createur"/>
 				  <label for="visibilite">Visibilité: ${doc[3]}</label><input type="hidden" value="${doc[3]}" id="visibilite" name="visibilite"/>
 				  <label for="description">Description: ${doc[4]}</label><input type="hidden" value="${doc[4]}" id="description" name="description"/>
-				  <input type="submit" value="Valider" id="choixDoc"/>
+				  <input type="submit" value="Ouvrir" id="choixDoc"/>
 			 </fieldset>
 		</form><br/>
     </c:forEach>
 	
-	<form action="/WEB-INF/jsp/creationDocument.jsp" method="get">
-		<fieldset> 
+	<form action="DocumentController" method="get">
+		<fieldset>
 			<legend>Nouveau document</legend>
 			<input type="hidden" value="1" name="nouveau"/>
-			<input type="submit" value="Valider"/>
+			<input type="submit" value="Créer"/>
 		</fieldset>
 	</form><br/>
 

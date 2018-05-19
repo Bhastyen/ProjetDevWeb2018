@@ -1,14 +1,28 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.Serializable;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
+import parser.ParserDOMDoc;
 
 
 
@@ -181,7 +195,7 @@ public class DocumentPerso implements Serializable{
     	doc.replaceChild(newparent, fils);
     }
     
-    public void ecrireNoeud(Element element, FileOutputStream out) throws NumberFormatException, IOException{
+    public void ecrireNoeud(Element element, BufferedWriter out) throws NumberFormatException, IOException{
     
     	if (element == null)
     		return ;
@@ -190,35 +204,47 @@ public class DocumentPerso implements Serializable{
     	
     	if (element.getNodeName().equals("noeud")){
     		// ecriture du noeud
-    		out.write(new Byte("<"+element.getNodeName()+" id="+element.getAttribute("id")+" x="+element.getAttribute("x")+" y="+element.getAttribute("y")
+    		out.write("<"+element.getNodeName()+" id="+element.getAttribute("id")+" x="+element.getAttribute("x")+" y="+element.getAttribute("y")
     				           +" taille="+element.getAttribute("taille")+" couleur1="+element.getAttribute("couleur1")+" couleur2="+element.getAttribute("couleur2")
-    				           +" couleur3="+element.getAttribute("couleur3")+">\n"));
+    				           +" couleur3="+element.getAttribute("couleur3")+">\n");
     		// on recurre sur les fils
     		for (int i = 0; i<nodes.getLength(); i++){
     			ecrireNoeud((Element) nodes.item(i), out);
     		}
     		// fermeture de la balise noeud
-    		out.write(new Byte("</noeud>\n"));
+    		out.write("</noeud>");
     	}else if (element.getNodeName().equals("idee")){
     		// ecriture de l'idee et de son texte
-    		out.write(new Byte("<"+element.getNodeName()+" taille="+element.getAttribute("taille")+" couleur1="
+    		out.write("<"+element.getNodeName()+" taille="+element.getAttribute("taille")+" couleur1="
     		                   +element.getAttribute("couleur1")+" couleur2="
     		                   +element.getAttribute("couleur2")+" couleur3="
     		                   +element.getAttribute("couleur3")+">"
-    		                   +element.getTextContent()+"</idee>\n"));
+    		                   +element.getTextContent()+"</idee>\n");
     		
     	}
     }
-    
-    public void ecrireFichier(int version, String nomDoc, String id_max){
-    	FileOutputStream out;
-    	
+   
+    public void ecrireFichier(int version, String nomDoc, String id_max, String cheminDTD, String chemin){
+		FileWriter f;
+		String ligne;
+		BufferedWriter out;
+		BufferedReader in;
+		
 		try {
-			// cree le fichier et ecrit l'entete des fichiers xml + la premiere balise document unique par fichier
-			out = new FileOutputStream(new File("/WEB_INF/xml/"+nomDoc+"/"+nomDoc+version));
-			out.write(new Byte("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"));
-			out.write(new Byte("<!DOCTYPE MindMap SYSTEM \"/WEB-INF/DTD/MindMap.dtd\">\n\n"));
-			out.write(new Byte("<document nom=\""+nomDoc+"\" id_max=\""+id_max+"\">\n"));
+			// cree le fichier
+			new File("./xml/").mkdirs();
+			f = new FileWriter("./xml/"+chemin);
+			out = new BufferedWriter(f);
+			
+			// regarde si la dtd est presente
+			if (!new File("./xml/document.dtd").exists() || !new File("./xml/document.dtd").isFile()){
+				ParserDOMDoc.creerDTD("./xml/document.dtd"); 
+			}
+			
+			// ecriture de l'entete
+			out.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n");
+			out.write("<!DOCTYPE document SYSTEM \""+"document.dtd\">\n\n");
+			out.write("<document nom=\""+nomDoc+"\" id_max=\""+id_max+"\">\n");
 			
 			// recupere les enfants du document s'il existe
 			if (doc != null){
@@ -229,13 +255,22 @@ public class DocumentPerso implements Serializable{
 					ecrireNoeud((Element) nodes.item(i), out);
 			}
 			// ecrit la fin du document
-			out.write(new Byte("</document>\n"));
+			out.write("</document>\n");
 	
 		    // fermeture du stream out
 			out.close();
-		} catch (FileNotFoundException e1) {
+			
+			// lecture
+			in = new BufferedReader(new InputStreamReader(new FileInputStream("./xml/"+chemin)));
+			while ((ligne = in.readLine()) != null){
+				System.out.println(ligne);
+			}
+			in.close();
+		} catch (UnknownHostException e2) {
+			e2.printStackTrace();
+		} catch (FileNotFoundException e1){
 			e1.printStackTrace();
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException e){
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();

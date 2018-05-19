@@ -21,7 +21,7 @@ public class ConnectForm {
 	
 	public Utilisateur connectUtilisateur(HttpServletRequest request) {
 		String email = request.getParameter("email");
-        String pass = request.getParameter("pass");
+		String pass = request.getParameter("pass");
         
         Utilisateur user = new Utilisateur();
         
@@ -31,6 +31,9 @@ public class ConnectForm {
     			erreurs.put("email", e.getMessage());
         } 
         user.setMail(email);
+        
+        // recupere le pseudo
+        user.setUserName(bdd.Connect.getPseudo(email));
       
         try {
     			testPass(pass); 		

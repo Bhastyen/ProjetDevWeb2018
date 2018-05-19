@@ -4,7 +4,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -116,20 +118,20 @@ public class Connect {
 		return r;
 	}
 	
-	public static ResultSet getDonneeDocument(String email){
+	public static int getId(String email){
 		Connect c = new Connect("root", "", "mind_map");
 		ResultSet r = null;
+		int id = 0;
 	    PreparedStatement pst;
 	    
 		try {
-			pst = (PreparedStatement) c.getConnexion().prepareStatement("SELECT documents.Nom,groupe.Nom_groupe,documents.Visibilite,documents.Description"+
-													                    " FROM utilisateurs,membres,groupes,documents"+
-													                    " WHERE utilisateurs.Numero = membres.Num_utilisateur"+
-													                    " AND membres.Num_groupe = groupe.Numero_groupe"+
-													                    " AND groupe.Numero_doc = documents.Numero_doc"+
-													                    " AND utilisateurs.email = ?");
+			pst = (PreparedStatement) c.getConnexion().prepareStatement("SELECT * FROM utilisateurs WHERE email = ?");
 			pst.setString(1, email);
 			r = pst.executeQuery();
+			
+			if (r.next())
+				id = r.getInt("Numero");
+			else System.out.println("Pas d'utilisateur trouve.");
 			
 			pst.close();
 			c.getConnexion().close();
@@ -137,7 +139,77 @@ public class Connect {
 			System.out.println(e);
 		}
 		
-		return r;
+		return id;
+	}
+	
+	public static String getPseudo(String email){
+		Connect c = new Connect("root", "", "mind_map");
+		ResultSet r = null;
+		String pseudo = null;
+	    PreparedStatement pst;
+	    
+		try {
+			pst = (PreparedStatement) c.getConnexion().prepareStatement("SELECT * FROM utilisateurs WHERE email = ?");
+			pst.setString(1, email);
+			r = pst.executeQuery();
+			
+			if (r.next())
+				pseudo = r.getString("Pseudo");
+			else System.out.println("Pas d'utilisateur trouve.");
+			
+			pst.close();
+			c.getConnexion().close();
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+		
+		return pseudo;
+	}
+	
+	public static List<String[]> getDonneeDocument(String email){
+		Connect c = new Connect("root", "", "mind_map");
+		String nom, lien, createur, description, visibilite;
+        Date date; int vis = 1;
+		List<String[]> docs = new ArrayList<>();
+        String[] tab;
+		ResultSet result = null;
+	    PreparedStatement pst;
+	    
+	    
+		try {
+			pst = (PreparedStatement) c.getConnexion().prepareStatement("SELECT documents.Lien_document,documents.Nom,groupes.Nom_groupe,documents.Visibilite,documents.Description"+
+													                    " FROM utilisateurs,membres,groupes,documents"+
+													                    " WHERE utilisateurs.Numero = membres.Num_utilisateur"+
+													                    " AND membres.Numero_groupe = groupes.Numero_groupe"+
+													                    " AND groupes.Numero_doc = documents.Numero_doc"+
+													                    " AND utilisateurs.email = ?");
+			pst.setString(1, email);
+			result = pst.executeQuery();
+			
+			if (result != null){
+				while (result.next()){
+					// on stocke ses donnees		   
+					nom = result.getString("Nom");
+					lien = result.getString("Lien_document");
+					createur = result.getString("Nom_groupe");
+					description = result.getString("Description");
+					vis = result.getInt("Visibilite");
+					if (vis == 1) visibilite = "Public";
+					else visibilite = "Prive";
+					       
+					tab = new String[5];
+					tab[0] = nom; tab[1] = lien; tab[2] = createur; tab[3] = description; tab[4] = visibilite; //tab[6] = nom; 
+					docs.add(tab);
+				}
+			}
+			
+			pst.close();
+			c.getConnexion().close();
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+		
+		return docs;
 	}
 	
 	public static int insertUtilisateur(String pseudo, String email, Date d, String mdp){
@@ -152,6 +224,75 @@ public class Connect {
 			pst.setString(2, mdp);
 			pst.setDate(3, d1);
 			pst.setString(4, email);
+			
+			r = pst.executeUpdate();
+			
+			pst.close();
+			c.getConnexion().close();
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+		
+		return r;
+	}
+
+	public static int insertDocument(String nom, String lien, int createur, int visibilite, String description){
+		Connect c = new Connect("root", "", "mind_map");
+		ResultSet result;
+		int r = 0, num_doc = 0, num_groupe = 0;
+	    PreparedStatement pst;
+	    
+		try {
+			
+			// creation du document
+			pst = (PreparedStatement) c.getConnexion().prepareStatement("INSERT INTO documents(Nom, Lien_document, Createur, Visibilite, Description) VALUES (?, ?, ?, ?, ?)");
+			pst.setString(1, nom);
+			pst.setString(2, lien);
+			pst.setInt(3, createur);
+			pst.setInt(4, visibilite);
+			pst.setString(5, description);
+			
+			r = pst.executeUpdate();
+			
+			pst.close();
+			
+			
+			// recupere l'id du nouveau doc
+			pst = (PreparedStatement) c.getConnexion().prepareStatement("SELECT Numero_doc FROM documents WHERE Createur = ? ORDER BY Numero_doc DESC");
+			pst.setInt(1, createur);
+			
+			result = pst.executeQuery();
+			
+			if (result.next())
+				num_doc = result.getInt("Numero_doc");
+			pst.close();
+			
+			
+			// creation du groupe
+			pst = (PreparedStatement) c.getConnexion().prepareStatement("INSERT INTO groupes(Nom_groupe, Createur_G, Numero_doc) VALUES (?, ?, ?)");
+			pst.setString(1, nom);
+			pst.setInt(2, createur);
+			pst.setInt(3, num_doc);
+			
+			r = pst.executeUpdate();
+			
+			pst.close();
+			
+			// recupere l'id du nouveau groupe
+			pst = (PreparedStatement) c.getConnexion().prepareStatement("SELECT Numero_groupe FROM groupes WHERE Createur_G = ? ORDER BY Numero_groupe DESC LIMIT 1");
+			pst.setInt(1, createur);
+			
+			result = pst.executeQuery();
+			
+			if (result.next())
+				num_groupe = result.getInt("Numero_groupe");
+			pst.close();
+			
+			// ajout du createur comme membre
+			pst = (PreparedStatement) c.getConnexion().prepareStatement("INSERT INTO membres(Numero_groupe, Num_utilisateur, Droits) VALUES (?, ?, ?)");
+			pst.setInt(1, num_groupe);
+			pst.setInt(2, createur);
+			pst.setInt(3, 1);
 			
 			r = pst.executeUpdate();
 			

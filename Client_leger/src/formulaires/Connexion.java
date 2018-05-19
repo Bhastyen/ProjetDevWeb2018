@@ -41,9 +41,8 @@ public class Connexion extends HttpServlet {
         request.setAttribute( "utilisateur", utilisateur );
         
         if (form.getErreurs().isEmpty()){
-        	System.out.println("Probleme1 "+form.getErreurs().isEmpty());
             session.setAttribute("sessionUser", utilisateur);
-            this.getServletContext().getRequestDispatcher("/DocumentController").forward( request, response );
+            this.getServletContext().getRequestDispatcher("/InitDocument").forward(request, response);
         } else {        	
         	session.setAttribute("sessionUser", null);
         	this.getServletContext().getRequestDispatcher(CONNECT).forward( request, response );

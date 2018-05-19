@@ -11,19 +11,20 @@
 
 <body>
 
-	<form action="/DocumentController" method="post">
+	<form action="DocumentController" method="post">
 		<fieldset> 
 			<legend>Nouveau Document</legend>
-			<label for="nom">Nom: <input type="text" placeholder="Veuillez indiquer le nom de votre document" id = "nom" name="nom"/></label>
+			<input type="hidden" value="1" name="nouveau"/>
+			<label for="nom">Nom: <input type="text" placeholder="Veuillez indiquer le nom de votre document" id = "nom" name="nom"/></label><br/>
 			<label for="visibilite">Visibilité: 
 				<select id="visibilite" name="visibilite">
 				  <option value="1">public</option>
 				  <option value="2">prive</option>
 				</select>
-			</label>
+			</label><br/>
 			<label for="description">Description:
 				<textarea cols="50" rows="6" maxlength="300" placeholder="Entrez votre description ici" id="description" name="description"></textarea>
-			</label>
+			</label><br/>
 			<input type="submit" value="Valider" id="choixDoc"/>
 		</fieldset>
 	</form><br/>
