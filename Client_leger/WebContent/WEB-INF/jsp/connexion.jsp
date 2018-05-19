@@ -5,27 +5,32 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Connexion</title>
-<link type="text/css" rel="stylesheet" href="style.css" />
+<link type="text/css" rel="stylesheet" href="connexion.css" />
 </head>
 <body>
 	<form method="post" action="Connexion">
 		<fieldset>
 			<legend>Connexion</legend>
 			
-			<label for="email">Adresse mail</label> 
-			<input type="text" id="email" name="email" value="<c:out value="${user.email}"/>" />
-			<span class="erreur">${form.erreurs['email']}</span>
-			<br/>
+			<div>
+				<label for="email">Adresse mail</label> 
+				<input type="text" id="email" name="email" value="<c:out value="${user.email}"/>" />
+				<span class="erreur">${form.erreurs['email']}</span>
+				<br/>
+			</div>
 			
-			<label for="pass">Mot de passe</label>
-			<input type="password" id="pass" name="pass" value="" />
-			<span class="erreur">${form.erreurs['pass']}</span>
-			<br/>
+			<div>
+				<label for="pass">Mot de passe</label>
+				<input type="password" id="pass" name="pass" value="" />
+				<span class="erreur">${form.erreurs['pass']}</span>
+				<br/>
+			</div>
 			
-			<input type="submit" value="Connexion" class="boutonSubmit" />
-			<a href="/ProjetWeb2018/Inscription" >Créer un compte</a>
-        		<br/>
-        		
+			<div>
+				<input type="submit" value="Connexion" class="boutonSubmit" />
+				<a href="/ProjetWeb2018/Inscription" >Créer un compte</a>
+	        		<br/>
+        	</div>
         	</fieldset>
      </form>
 </body>
