@@ -29,7 +29,9 @@ public class Edge extends Group {
 		getChildren().add(line);
 		
 	}
-
+public void delEdge(){
+    getChildren().clear();
+}
 	public Noeud getSource() {
 		return source;
 	}

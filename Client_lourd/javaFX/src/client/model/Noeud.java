@@ -66,9 +66,14 @@ public class Noeud extends Pane {
 	public String getTitre() {
 		return titre;
 	}
-
+public void remove(){
+       getChildren().clear();
+}
 	public void setTitre(String titre) {
+            Text titreText=new Text(longueur/3,largeur/3,titre);
 		this.titre = titre;
+                getChildren().remove(1);
+                getChildren().add(titreText);
 	}
 
 	public void addCellChild(Noeud cell) {

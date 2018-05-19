@@ -31,6 +31,7 @@ public class MouseGestures {
 	MenuItem item4 = new MenuItem("Modifier Largeur");
 	MenuItem item5 = new MenuItem("Modifier Père");
 	MenuItem item6 = new MenuItem("Ajouter noeud");
+        MenuItem item7 = new MenuItem("Supprimer noeud");
 
 	Graph graph;
 	Noeud noeud;
@@ -70,6 +71,7 @@ MainApp mainApp;
 				stage.showAndWait();
 		    }
 		});
+                
 		contextMenu.getItems().clear();
 		contextMenu.getItems().addAll(item6);
 		contextMenu.show(node, event.getScreenX(), event.getScreenY());
@@ -207,8 +209,20 @@ MainApp mainApp;
 					System.out.println(((Noeud)node).toString());
 			    }
 			});
+                        item7.setOnAction(new EventHandler<ActionEvent>() {
+			    public void handle(ActionEvent e) {
+                               for (Edge edge : model.getAllEdges()){
+                                 if(edge.getSource().equals((Noeud)node) ||edge.getTarget().equals((Noeud)node) )
+                                  edge.delEdge();
+                                
+                                }
+			((Noeud)node).remove();
+                        
+				
+			    }
+			});
 			contextMenu.getItems().clear();
-			contextMenu.getItems().addAll(item1, item2,item3,item4,item5);
+			contextMenu.getItems().addAll(item1, item2,item3,item4,item5,item7);
 			contextMenu.show(node, event.getScreenX(), event.getScreenY());
 			event.consume();
 		});

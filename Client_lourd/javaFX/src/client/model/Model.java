@@ -94,7 +94,7 @@ public class Model {
 			throw new UnsupportedOperationException("Unsupported type: " + type);
 		}
 	}
-
+                
 	private void addCell(Noeud cell) {
 
 		addedCells.add(cell);
