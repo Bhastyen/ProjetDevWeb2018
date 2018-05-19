@@ -35,26 +35,26 @@ public class InscForm {
         } catch(Exception e) {
         		erreurs.put("email", e.getMessage());
         } 
-        user.setMail(email);
+        user.setEmail(email);
         
         try {
         		testPass(pass, confirmPass); 		
         } catch(Exception e) {
         		erreurs.put("pass", e.getMessage());
         }    
-        user.setPass(pass);
+        user.setMotPasse(pass);
         
         try {
         		testUserName(UserName);
         } catch(Exception e) {
         		erreurs.put("userName", e.getMessage());
         }   
-        user.setUserName(UserName);
+        user.setPseudo(UserName);
         
         // connection a la bdd pour voir s'il n'existe pas deja une adresse email semblable
         if (email != null && pass != null && UserName != null){
         	if (!bdd.Connect.valideEmail(email)){
-				erreurs.put("bdd", "Adresse déjà utilisé");
+				erreurs.put("bdd", "Adresse dï¿½jï¿½ utilisï¿½");
 			}
         }
         
@@ -65,7 +65,7 @@ public class InscForm {
             	n = bdd.Connect.insertUtilisateur(UserName, email, new Date(), pass);
             }
             
-            // verifie que l'insertion est bien fonctionnée
+            // verifie que l'insertion est bien fonctionnï¿½e
             if (n == 0){
             	result = "Inscription echouee!";
             }else{

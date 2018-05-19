@@ -30,7 +30,7 @@ public class ModifPassForm {
 			erreurs.put("pass", e.getMessage());
 		}
 		
-		user.setPass(nouvPass);
+		user.setMotPasse(nouvPass);
 		return user;
 	}
 	

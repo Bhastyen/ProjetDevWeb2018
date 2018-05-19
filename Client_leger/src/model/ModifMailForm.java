@@ -23,7 +23,7 @@ public class ModifMailForm {
 		} catch(Exception e) {
 			erreur = e.getMessage();
 		}
-		user.setMail(email);
+		user.setEmail(email);
 		return user;
 	}
 	

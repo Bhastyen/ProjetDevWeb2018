@@ -39,7 +39,7 @@ public class ModifUserName extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ModifUserNameForm modifUserNameForm = new ModifUserNameForm();
 		Utilisateur user = new Utilisateur();
-		user.setUserName("lajante");
+		user.setPseudo("lajante");
 		
 		request.setAttribute("user", user);
 		

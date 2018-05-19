@@ -39,7 +39,7 @@ public class ModifMail extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ModifMailForm modifPassForm = new ModifMailForm();
 		Utilisateur user = new Utilisateur();
-		user.setMail("pierre@pierre.fr");
+		user.setEmail("pierre@pierre.fr");
 		
 		request.setAttribute("user", user);
 		

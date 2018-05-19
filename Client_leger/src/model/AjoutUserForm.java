@@ -32,7 +32,7 @@ public class AjoutUserForm {
     			resultat = "Inscription échouée !";
 		}
 		
-		user.setUserName(nomUser);
+		user.setPseudo(nomUser);
 		return user;
 		
 	}

@@ -30,19 +30,19 @@ public class ConnectForm {
         } catch(Exception e) {
     			erreurs.put("email", e.getMessage());
         } 
-        user.setMail(email);
+        user.setEmail(email);
         
         // recupere le pseudo
-        user.setUserName(bdd.Connect.getPseudo(email));
+        user.setPseudo(bdd.Connect.getPseudo(email));
       
         try {
     			testPass(pass); 		
         } catch(Exception e) {
     			erreurs.put("pass", e.getMessage());
         } 		   
-        user.setPass(pass);
+        user.setMotPasse(pass);
         
-        // connection a la base de données
+        // connection a la base de donnï¿½es
         if (email != null && pass != null){
         	System.out.println("Probleme "+bdd.Connect.valideUtilisateur(email, pass));
 		    if (!bdd.Connect.valideUtilisateur(email, pass)){

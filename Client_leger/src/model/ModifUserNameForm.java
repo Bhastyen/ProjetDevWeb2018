@@ -23,7 +23,7 @@ public class ModifUserNameForm {
 		} catch(Exception e) {
 			erreur = e.getMessage();
 		}
-		user.setMail(userName);
+		user.setEmail(userName);
 		return user;		
 	}
 	
