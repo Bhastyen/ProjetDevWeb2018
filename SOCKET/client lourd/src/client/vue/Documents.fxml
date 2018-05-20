@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<BorderPane prefHeight="450" prefWidth="600.0" style="-fx-background-color: #FAEBD7;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.vue.DocumentController">
+   <right>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="86.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="188.0" minWidth="1.0" prefWidth="114.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Nom du document:" wrapText="true" />
+            <Label text="Créateur:" GridPane.rowIndex="1" />
+            <Label text="Nom du noeud:" wrapText="true" GridPane.rowIndex="3" />
+            <Label text="Description:" GridPane.rowIndex="4" />
+            <Label text="Date de création:" wrapText="true" GridPane.rowIndex="2" />
+            <Label fx:id="nomDocLabel" text="Label" GridPane.columnIndex="1" />
+            <Label fx:id="nomCreateurLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="datcreaLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="nomNoeudLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="descriptionLabel" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+         </children>
+      </GridPane>
+   </right>
+</BorderPane>
