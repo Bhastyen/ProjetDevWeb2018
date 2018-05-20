@@ -55,8 +55,8 @@ public class SocketExecuteCommande extends ServerSocket implements Runnable{
 				if (reponse == 1){
 					// renvoie la reponse apropriee
 					util = new Utilisateur();
-					util.setMail(info[1]);
-					util.setPass(info[2]);
+					util.setEmail(info[1]);
+					util.setMotPasse(info[2]);
 				}else{
 					util = null;
 				}

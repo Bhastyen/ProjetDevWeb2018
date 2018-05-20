@@ -16,7 +16,7 @@ public class CreeGroupeForm {
 	
 	public Groupe creerGroupe(HttpServletRequest request) {
 		String nomGroupe = request.getParameter("nomGroupe");
-		
+		Groupe groupe = new Groupe();
 		
 		try {
 			testNomGroupe(nomGroupe);
@@ -25,7 +25,7 @@ public class CreeGroupeForm {
 			resultat = "Création de groupe échouée !";
 		}
 		resultat = "Création de groupe réussie !";
-                Groupe groupe = new Groupe(nomGroupe);
+		groupe.setNomGroupe(nomGroupe);
 		return groupe;
 	}
 	

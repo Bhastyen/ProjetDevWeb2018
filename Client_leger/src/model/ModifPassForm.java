@@ -25,7 +25,7 @@ public class ModifPassForm {
 		String confPass = request.getParameter("confPass");
 		
 		try {
-			testPass(ancPass, nouvPass, confPass); 		
+			testPass(ancPass, nouvPass, confPass,user); 		
 		} catch(Exception e) {
 			erreurs.put("pass", e.getMessage());
 		}
@@ -34,13 +34,17 @@ public class ModifPassForm {
 		return user;
 	}
 	
-	public void testPass(String ancPass, String nouvPass, String confPass) throws java.lang.Exception {
+	public void testPass(String ancPass, String nouvPass, String confPass,Utilisateur user) throws java.lang.Exception {
+		
 		if(nouvPass != null && nouvPass.trim().length() != 0 && confPass != null && confPass.trim().length() != 0) {
 			if(!nouvPass.equals(confPass)) {
-				throw new Exception("Les mots de passe ne corespondent pas !");
+				throw new Exception("Les mots de passe ne correspondent pas !");
 			}
 			else if(nouvPass.trim().length() < 5) {
 				throw new Exception("Le mot de passe est trop court (au moins 5 caractères requis) !");
+			}
+			else{
+				bdd.Connect.mdpUpdate(user.getEmail(), nouvPass);
 			}
 		}
 		else {

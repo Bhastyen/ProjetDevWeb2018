@@ -1,5 +1,10 @@
 package parser;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Noeud;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -7,7 +12,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 
 public class MyParserSAXDocument extends DefaultHandler{
-	//private ArrayList<Noeud> noeuds = new ArrayList<Noeud>();
+	private List<Noeud> noeuds = new ArrayList<Noeud>();
 	private int niveau = 0;
 
 	public void startDocument(){
@@ -39,8 +44,8 @@ public class MyParserSAXDocument extends DefaultHandler{
 		System.out.println(mot);
 	}
 	
-	/*public List<Noeud> getNoeuds(){
+	public List<Noeud> getNoeuds(){
 		return noeuds; 
-	}*/
+	}
 
 }

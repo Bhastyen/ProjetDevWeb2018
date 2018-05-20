@@ -19,26 +19,30 @@ import bdd.Connect;
  * Servlet implementation class Init
  */
 @WebServlet("/Init")
-public class Init extends HttpServlet {
+public class Init extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private Thread envoie;
 	private Thread execute;
+	private Thread connexion;
+	
 
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
     public void init(ServletConfig config) throws ServletException {
-    	/*try {
+    	try {
     		// creation de nouveaux thread permettant de gerer le client lourd
-			envoie = new Thread(new SocketEnvoieDonnee());
-			execute = new Thread(new SocketExecuteCommande());
+			//envoie = new Thread(new SocketEnvoieDonnee());
+			//execute = new Thread(new SocketExecuteCommande());
+    		connexion = new Thread(new WebSocketTest());
 			
 			// lancement des sockets en parallele du serveur principale
-			envoie.start();
-			execute.start();
+			//envoie.start();
+			//execute.start();
+    		connexion.start();
 		} catch (IOException e) {
 			System.out.println(e);
-		}*/
+		}
     }
 
 	/**

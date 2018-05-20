@@ -64,7 +64,7 @@ public class Connect {
 			pst.setString(1, email);
 			
 			r = pst.executeQuery();
-			valide = r.next();
+			valide = !r.next();
 			
 			pst.close();
 			c.getConnexion().close();
@@ -96,6 +96,57 @@ public class Connect {
 		}
 		
 		return valide;
+	}
+	
+	public static void emailUpdate(String email, String email2){
+		Connect c = new Connect("root", "", "mind_map");
+		int r ;
+		PreparedStatement pst ;
+		try {
+			pst = (PreparedStatement) c.getConnexion().prepareStatement("UPDATE  utilisateurs SET utilisateurs.email = ? WHERE email = ?");
+			pst.setString(1, email2);
+			pst.setString(2, email);
+			r = pst.executeUpdate();
+			pst.close();
+		
+		}catch(SQLException e) {
+			System.out.println(e);
+			
+		}
+	}
+	
+	public static void pseudoUpdate(String email, String pseudo){
+		Connect c = new Connect("root", "", "mind_map");
+		int r ;
+		PreparedStatement pst ;
+		try {
+			pst = (PreparedStatement) c.getConnexion().prepareStatement("UPDATE  utilisateurs SET utilisateurs.pseudo = ? WHERE email = ?");
+			pst.setString(1, pseudo);
+			pst.setString(2, email);
+			r = pst.executeUpdate();
+			pst.close();
+		
+		}catch(SQLException e) {
+			System.out.println(e);
+			
+		}
+	}
+	
+	public static void mdpUpdate(String email, String mdp){
+		Connect c = new Connect("root", "", "mind_map");
+		int r ;
+		PreparedStatement pst ;
+		try {
+			pst = (PreparedStatement) c.getConnexion().prepareStatement("UPDATE  utilisateurs SET utilisateurs.Mdp = ? WHERE email = ?");
+			pst.setString(1, mdp);
+			pst.setString(2, email);
+			r = pst.executeUpdate();
+			pst.close();
+		
+		}catch(SQLException e) {
+			System.out.println(e);
+			
+		}
 	}
 	
 	public static ResultSet getDonneeUtilisateur(String email, String mdp){

@@ -16,7 +16,7 @@ import model.Utilisateur;
 @WebServlet("/ModifMail")
 public class ModifMail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static final String MODIF_MAIL = "/WEB-INF/gestionCompte.jsp";
+	public static final String MODIF_MAIL = "/WEB-INF/jsp/gestionCompte.jsp";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -37,15 +37,15 @@ public class ModifMail extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ModifMailForm modifPassForm = new ModifMailForm();
+		ModifMailForm modifMailForm = new ModifMailForm();
 		Utilisateur user = new Utilisateur();
-		user.setEmail("pierre@pierre.fr");
+		//user.setMail("pierre@pierre.fr");
+		user = (Utilisateur) request.getSession().getAttribute("sessionUser");
+
+		user = modifMailForm.changeMail(user, request);
+	//	request.setAttribute("modifMailForm", modifMailForm);
 		
-		request.setAttribute("user", user);
-		
-		user = modifPassForm.changeMail(user, request);
-		
-		request.setAttribute("modifPassForm", modifPassForm);
+		request.setAttribute("sessionUser", user);
 		
 		this.getServletContext().getRequestDispatcher(MODIF_MAIL).forward( request, response );
 		

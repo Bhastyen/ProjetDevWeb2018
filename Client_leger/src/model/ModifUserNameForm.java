@@ -19,7 +19,7 @@ public class ModifUserNameForm {
 		String userName = request.getParameter("userName");
 		
 		try {
-			testUserName(userName);
+			testUserName(userName,user);
 		} catch(Exception e) {
 			erreur = e.getMessage();
 		}
@@ -27,11 +27,14 @@ public class ModifUserNameForm {
 		return user;		
 	}
 	
-	public void testUserName(String UserName) throws java.lang.Exception {
+	public void testUserName(String UserName,Utilisateur user) throws java.lang.Exception {
 		if(UserName != null && UserName.trim().length() != 0 ) {
 			if(UserName.trim().length() < 3) {
 				throw new Exception("Le nom d'utilisateur doit contenir au moins 3 caractères !");
 			}	
+			else{
+				bdd.Connect.pseudoUpdate(user.getEmail(), UserName);
+			}
 		}
 		else {
 			throw new Exception("Il faut indiquer un nom d'utilisateur !");

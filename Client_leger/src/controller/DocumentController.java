@@ -68,7 +68,7 @@ public class DocumentController extends HttpServlet {
 				request.getSession().setAttribute("numero_doc", i);
 						 
 				// envoie vers la page d'affichage du doc
-				getServletContext().getRequestDispatcher("/WEF-INB/jsp/pagePrincipale.jsp").forward(request, response);
+				getServletContext().getRequestDispatcher("/WEB-INF/jsp/pagePrincipale.jsp").forward(request, response);
 			}
 		}
 				
@@ -77,7 +77,7 @@ public class DocumentController extends HttpServlet {
 				
 		// ajoute le document a la liste des documents utilises
 		if (docDOM != null){
-			doc.setDoc(docDOM);
+			//doc.setDoc(docDOM);
 			Documents.documents.add(doc);
 		}
 				
@@ -85,7 +85,7 @@ public class DocumentController extends HttpServlet {
 		request.getSession().setAttribute("numero_doc", Documents.documents.size()-1);
 				 
 		// envoie vers la page d'affichage du doc
-		this.getServletContext().getRequestDispatcher("/WEB-INB/jsp/pagePrincipale.jsp").forward(request, response);
+		this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/pagePrincipale.jsp").forward(request, response);
 
 	}
 	
@@ -119,7 +119,7 @@ public class DocumentController extends HttpServlet {
 		Documents.documents.get(Documents.documents.size()-1).ecrireFichier(0, nomDoc, "0", "", nomDoc+"0.xml");  // TODO methode a implementer dans la nouvelle classe
 		// recharge le document apres ecriture
 		docDOM = new ParserDOMDoc().ParserDoc("./xml/"+nomDoc+"0.xml");  // TODO plus obligatoire
-		Documents.documents.get(Documents.documents.size()-1).setDoc(docDOM);
+		//Documents.documents.get(Documents.documents.size()-1).setDoc(docDOM);
 		System.out.println("Email "+email);
 		
 		// recuperation de l'id du createur

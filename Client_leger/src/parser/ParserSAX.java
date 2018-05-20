@@ -7,6 +7,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import model.Noeud;
+
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -36,13 +38,13 @@ public class ParserSAX {
 		}
 	}
 	
-	/*public static List<Noeud> parserSAX(String docXML) {
+	public static List<Noeud> parserSAX(String docXML) {
          ParserSAX parser = new ParserSAX();
          MyParserSAXDocument handler = new MyParserSAXDocument();
          
          parser.monParsing(handler, docXML);
          
-         return parser.getNoeuds();
-	}*/
+         return handler.getNoeuds();
+	}
 
 }

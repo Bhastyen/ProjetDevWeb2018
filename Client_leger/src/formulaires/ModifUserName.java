@@ -16,7 +16,7 @@ import model.Utilisateur;
 @WebServlet("/ModifUserName")
 public class ModifUserName extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static final String MODIF_USER_NAME= "/WEB-INF/gestionCompte.jsp";
+	public static final String MODIF_USER_NAME= "/WEB-INF/jsp/gestionCompte.jsp";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -39,13 +39,12 @@ public class ModifUserName extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ModifUserNameForm modifUserNameForm = new ModifUserNameForm();
 		Utilisateur user = new Utilisateur();
-		user.setPseudo("lajante");
-		
-		request.setAttribute("user", user);
-		
+		user = (Utilisateur) request.getSession().getAttribute("sessionUser");
+
 		user = modifUserNameForm.changeUserName(user, request);
-		
 		request.setAttribute("modifUserNameForm", modifUserNameForm);
+		request.setAttribute("sessionUser", user);
+		
 		
 		this.getServletContext().getRequestDispatcher(MODIF_USER_NAME).forward( request, response );
 	}

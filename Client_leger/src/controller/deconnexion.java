@@ -1,4 +1,4 @@
-package formulaires;
+package controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,21 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.ModifPassForm;
-import model.Utilisateur;
-
 /**
- * Servlet implementation class ModifPass
+ * Servlet implementation class deconnexion
  */
-@WebServlet("/ModifPass")
-public class ModifPass extends HttpServlet {
+@WebServlet("/deconnexion")
+public class deconnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static final String MODIF_PASS = "/WEB-INF/jsp/gestionCompte.jsp";
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ModifPass() {
+    public deconnexion() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,24 +26,18 @@ public class ModifPass extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.getServletContext().getRequestDispatcher(MODIF_PASS).forward( request, response );
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.getSession().invalidate();
+		this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/connexion.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ModifPassForm modifPassForm = new ModifPassForm();
-		Utilisateur user = new Utilisateur();
-		user = (Utilisateur) request.getSession().getAttribute("sessionUser");
-		
-		user = modifPassForm.changePass(user, request);
-		request.setAttribute("modifPassForm", modifPassForm);
-		request.setAttribute("sessionUser", user);	
-	
-		
-		this.getServletContext().getRequestDispatcher(MODIF_PASS).forward( request, response );
-		
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

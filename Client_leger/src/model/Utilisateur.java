@@ -21,12 +21,12 @@ public class Utilisateur {
 	/**
 	 * Constructeur.
 	 * 
-	 * @param pŝeudo
+	 * @param pÅ�eudo
 	 * @param mdp
 	 */
-	public Utilisateur(String pŝeudo, String mdp) {
+	public Utilisateur(String pseudo, String mdp) {
 		
-		this.pseudo = new SimpleStringProperty(pŝeudo);
+		this.pseudo = new SimpleStringProperty(pseudo);
 		this.motPasse = new SimpleStringProperty(mdp);
 
 		// Some initial dummy data, just for convenient testing.

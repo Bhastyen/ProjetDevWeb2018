@@ -19,7 +19,7 @@ public class ModifMailForm {
 		String email = request.getParameter("email");
 		
 		try {
-			testEmail(email);
+			testEmail(email,user);
 		} catch(Exception e) {
 			erreur = e.getMessage();
 		}
@@ -27,14 +27,18 @@ public class ModifMailForm {
 		return user;
 	}
 	
-	public void testEmail(String email) throws java.lang.Exception {
+	public void testEmail(String email,Utilisateur user) throws java.lang.Exception {
 		if(email != null && email.trim().length() != 0) {
 			if(!email.matches("([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)")) {
-				throw new Exception("L'addresse email est invalide !");
+				throw new Exception("L'adresse email est invalide !");
+			}
+			else{
+
+				bdd.Connect.emailUpdate(user.getEmail(), email);
 			}
 		}
 		else {
-			throw new Exception("Il faut saisir une addresse mail !");
+			throw new Exception("Il faut saisir une adresse mail !");
 		}
 	}
 }

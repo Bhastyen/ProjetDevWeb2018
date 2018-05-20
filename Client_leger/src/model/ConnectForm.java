@@ -6,6 +6,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+
+
+
 public class ConnectForm {
 	
 	private String resultat;

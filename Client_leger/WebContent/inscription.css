@@ -1,0 +1,52 @@
+@CHARSET "ISO-8859-1";
+@CHARSET "ISO-8859-1";
+
+body{
+	background-color: darkslategrey;
+	background-image: url('img/triangles.jpg');
+	min-width: 1200px;
+	min-height: 1200px;
+	font-family:Garamond;
+}
+ form{
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 600px;
+    margin-top: 100px;
+ 	}
+fieldset {
+	background-color: whitesmoke;
+	border-color: orange;
+	padding:50px;
+	border-radius:105px;
+	text-align:center;
+}
+
+legend{
+	font-style:oblique;
+	font-size: 50px;
+	background-color: whitesmoke;
+    border-radius: 25px;
+    padding: 15px 15px;
+    border : double orange;
+}
+
+label{
+	
+	padding : 25px ;
+}
+
+.boutonSubmit{
+	font-family: Garamond;
+    font-size: 20px;
+    border-color: orange;
+    border-radius: 12px;
+}
+
+.boutonSubmit:hover{
+	background-color:white;
+	}
+
+div{
+	margin:15px;
+}

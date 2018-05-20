@@ -27,8 +27,18 @@ public class InitDocument extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<String[]> docs;
+
 		if (request.getSession().getAttribute("sessionUser") == null){
 			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/connexion.jsp").forward(request, response);  //pas de pseudo = connexion
+		}
+		else{
+			docs = bdd.Connect.getDonneeDocument(((model.Utilisateur) request.getSession().getAttribute("sessionUser")).getEmail());
+	    	// on definit la liste a afficher dans la jsp
+	    	request.setAttribute("docs", docs);
+
+			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/choixDocument.jsp").forward(request, response);  //pas de pseudo = connexion
+
 		}
 	}
 
@@ -46,7 +56,7 @@ public class InitDocument extends HttpServlet {
     	docs = bdd.Connect.getDonneeDocument(((model.Utilisateur) request.getSession().getAttribute("sessionUser")).getEmail());
     	// on definit la liste a afficher dans la jsp
     	request.setAttribute("docs", docs);
-    	System.out.println(docs);
+
 		this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/choixDocument.jsp").forward(request, response);  //pas de pseudo = connexion
 	}
 

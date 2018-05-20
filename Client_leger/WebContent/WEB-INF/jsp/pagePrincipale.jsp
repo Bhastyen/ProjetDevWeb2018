@@ -5,11 +5,22 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<link type="text/css" rel="stylesheet" href="choixDocument.css" />
+	<link type="text/css" rel="stylesheet" href="bandeau.css" />
 <title>Insert title here</title>
 </head>
 
 <body>
-
+    <div class = "bandeau">
+    	<div class ="onglet"><a href="/ProjetWeb2018/redirection?choix=1" >Choix document</a></div>
+    	<div class ="onglet"><a href="/ProjetWeb2018/redirection?choix=2" >Gestion compte</a></div>
+    	<div class ="onglet"><a href="/ProjetWeb2018/redirection?choix=3" >Gestion groupe</a></div>
+    	<div class ="onglet"><a href="/ProjetWeb2018/redirection?choix=4" >Déconnexion</a></div>   
+    
+    </div class ="documentPrincipal">
+    
+    </div>
+    
 </body>
 
 </html>
